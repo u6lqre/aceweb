@@ -9,7 +9,7 @@ function App({}: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error>();
+  const [error, setError] = useState<Error | null>();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -46,7 +46,7 @@ function App({}: Props) {
         loading={loading}
       />
 
-      <div className="w-full flex flex-col gap-0.5">
+      <div className="w-full flex flex-col gap-2.5">
         <VideoPlayer
           src={videoSrc}
           setLoading={setLoading}

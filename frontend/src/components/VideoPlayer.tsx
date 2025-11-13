@@ -4,7 +4,7 @@ import { useEffect, useRef } from "react";
 type Props = {
   src: string | null;
   setLoading: (state: boolean) => void;
-  setError: (error: Error) => void;
+  setError: (error: Error | null) => void;
 };
 
 function VideoPlayer({ src, setLoading, setError }: Props) {
@@ -32,6 +32,7 @@ function VideoPlayer({ src, setLoading, setError }: Props) {
 
       return () => {
         hls.destroy();
+        setError(null);
       };
     }
   }, [src]);
