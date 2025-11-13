@@ -19,6 +19,10 @@ function VideoPlayer({ src, setLoading }: Props) {
         setLoading(false);
         videoRef.current?.play();
       });
+
+      return () => {
+        hls.destroy();
+      };
     }
   }, [src]);
 
