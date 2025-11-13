@@ -1,6 +1,7 @@
-import { useRef, useState, type FormEvent } from "react";
+import { useEffect, useRef, useState, type FormEvent } from "react";
 import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
+import { Info } from "lucide-react";
 
 type Props = {};
 
@@ -8,6 +9,7 @@ function App({}: Props) {
   const inputRef = useRef<HTMLInputElement>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
+  const [error, setError] = useState<Error>();
 
   const handleSubmit = (e: FormEvent) => {
     e.preventDefault();
@@ -29,6 +31,13 @@ function App({}: Props) {
     }
   };
 
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.value = "";
+      inputRef.current.focus();
+    }
+  }, [error]);
+
   return (
     <div className="flex flex-col items-center gap-10 w-full">
       <SearchBox
@@ -36,7 +45,20 @@ function App({}: Props) {
         inputRef={inputRef}
         loading={loading}
       />
-      <VideoPlayer src={videoSrc} setLoading={setLoading} />
+
+      <div className="w-full flex flex-col gap-0.5">
+        <VideoPlayer
+          src={videoSrc}
+          setLoading={setLoading}
+          setError={setError}
+        />
+        {error && (
+          <p className="text-red-500 flex items-center gap-1.5 justify-center">
+            <Info size={16} />
+            {error.message}. Please try again with another content_id.
+          </p>
+        )}
+      </div>
     </div>
   );
 }

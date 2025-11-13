@@ -4,9 +4,10 @@ import { useEffect, useRef } from "react";
 type Props = {
   src: string | null;
   setLoading: (state: boolean) => void;
+  setError: (error: Error) => void;
 };
 
-function VideoPlayer({ src, setLoading }: Props) {
+function VideoPlayer({ src, setLoading, setError }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
   const hls = new Hls();
 
@@ -20,6 +21,15 @@ function VideoPlayer({ src, setLoading }: Props) {
         videoRef.current?.play();
       });
 
+      hls.on(Hls.Events.ERROR, (name, data) => {
+        const errorFatal = data.fatal;
+        if (errorFatal) {
+          setLoading(false);
+          setError(new Error(data.error.message || "Unknown error."));
+          hls.destroy();
+        }
+      });
+
       return () => {
         hls.destroy();
       };
@@ -27,7 +37,7 @@ function VideoPlayer({ src, setLoading }: Props) {
   }, [src]);
 
   return (
-    <div className="w-full rounded-lg relative bg-neutral-2">
+    <div className="w-full rounded-lg">
       <video
         ref={videoRef}
         height={360}
