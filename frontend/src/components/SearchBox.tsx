@@ -13,7 +13,7 @@ function SearchBox({ handleSubmit, inputRef, loading }: Props) {
       <input
         ref={inputRef}
         type="text"
-        placeholder="acestream://content_id"
+        placeholder="content_id"
         className="placeholder:text-neutral-2 p-1.5 pl-2.5 border border-neutral-2 rounded-[10px] w-[250px] text-white focus:border-neutral-3 duration-300"
       />
       <button
