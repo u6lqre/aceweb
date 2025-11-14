@@ -21,7 +21,7 @@ function VideoPlayer({ src, setLoading, setError }: Props) {
         videoRef.current?.play();
       });
 
-      hls.on(Hls.Events.ERROR, (name, data) => {
+      hls.on(Hls.Events.ERROR, (_name, data) => {
         const errorFatal = data.fatal;
         if (errorFatal) {
           setLoading(false);
