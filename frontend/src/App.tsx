@@ -2,6 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
 import { Info } from "lucide-react";
+import { transformPlaybackUrl } from "./utils/refactorPlaybackUrl";
 
 type Props = {};
 
@@ -18,16 +19,18 @@ function App({}: Props) {
   };
 
   const fetchStream = async (contentId: string | undefined) => {
-    const engineApiUrl: string = import.meta.env.VITE_API_URL;
+    const apiUrl: string = import.meta.env.VITE_API_URL;
 
     try {
-      const response = await fetch(`${engineApiUrl}/streams/${contentId}`);
+      const response = await fetch(`${apiUrl}/streams/${contentId}`);
       if (!response.ok) throw new Error(`HTTP error: ${response.status}`);
 
       const data = await response.json();
-      setVideoSrc(data.playbackUrl);
+
+      const playbackUrl = transformPlaybackUrl(data.playbackUrl);
+      setVideoSrc(playbackUrl);
     } catch (err) {
-      console.error("Error fetching stream: ", err);
+      setError(new Error(`${err}`));
     }
   };
 
