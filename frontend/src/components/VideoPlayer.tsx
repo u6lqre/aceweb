@@ -1,3 +1,4 @@
+import { CustomFragmentLoader } from "../utils/CustomFragmentLoader";
 import Hls from "hls.js";
 import { useEffect, useRef } from "react";
 
@@ -9,7 +10,8 @@ type Props = {
 
 function VideoPlayer({ src, setLoading, setError }: Props) {
   const videoRef = useRef<HTMLVideoElement>(null);
-  const hls = new Hls();
+
+  const hls = new Hls({ fLoader: CustomFragmentLoader });
 
   useEffect(() => {
     if (Hls.isSupported() && videoRef.current && src) {
