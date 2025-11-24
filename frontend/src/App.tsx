@@ -2,7 +2,7 @@ import { useEffect, useRef, useState, type FormEvent } from "react";
 import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
 import { Info } from "lucide-react";
-import { transformPlaybackUrl } from "./utils/refactorPlaybackUrl";
+import { rewriteEngineUrl } from "./utils/rewriteEngineUrl";
 
 type Props = {};
 
@@ -27,7 +27,7 @@ function App({}: Props) {
 
       const data = await response.json();
 
-      const playbackUrl = transformPlaybackUrl(data.playbackUrl);
+      const playbackUrl = rewriteEngineUrl(data.playbackUrl);
       setVideoSrc(playbackUrl);
     } catch (err) {
       setError(new Error(`${err}`));
