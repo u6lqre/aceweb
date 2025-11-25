@@ -3,6 +3,7 @@ import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
 import { Info } from "lucide-react";
 import { rewriteEngineUrl } from "./utils/rewriteEngineUrl";
+import Footer from "./components/Footer";
 
 type Props = {};
 
@@ -62,6 +63,7 @@ function App({}: Props) {
           </p>
         )}
       </div>
+      <Footer />
     </div>
   );
 }
