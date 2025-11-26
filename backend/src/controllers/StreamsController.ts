@@ -1,11 +1,13 @@
 import AceStreamService from "@/services/AceStreamService";
+import SessionService from "@/services/SessionService";
 import { Request, Response } from "express";
 
 class StreamsController {
   public async getPlaybackUrl(req: Request, res: Response) {
     try {
-      const contentId: string = req.params.contentId;
-      const data = await AceStreamService.fetchPlaybackData(contentId);
+      const contentId = req.params.contentId;
+      const pid = await SessionService.getSessionId(contentId);
+      const data = await AceStreamService.fetchPlaybackData(contentId, pid);
 
       const playbackUrl = data.response.playback_url;
 

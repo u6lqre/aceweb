@@ -20,9 +20,9 @@ class AceStreamService {
     this.engineUrl = process.env.ENGINE_URL || "";
   }
 
-  public async fetchPlaybackData(contentId: string) {
+  public async fetchPlaybackData(contentId: string, pid: number) {
     const response = await fetch(
-      `${this.engineUrl}/ace/manifest.m3u8?format=json&content_id=${contentId}`
+      `${this.engineUrl}/ace/manifest.m3u8?format=json&content_id=${contentId}&pid=${pid}`
     );
 
     if (!response.ok)
