@@ -1,6 +1,7 @@
 generator client {
-  provider = "prisma-client"
-  output   = "../generated/prisma"
+  provider     = "prisma-client"
+  output       = "../generated/prisma"
+  moduleFormat = "cjs"
 }
 
 datasource db {
@@ -8,6 +9,6 @@ datasource db {
 }
 
 model Session {
-  pid        Int @id @default(autoincrement())
+  pid        Int    @id @default(autoincrement())
   content_id String @unique
 }
