@@ -3,6 +3,7 @@ import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
 import { Info } from "lucide-react";
 import { rewriteEngineUrl } from "./utils/rewriteEngineUrl";
+import { extractAceStreamId } from "./utils/extractAceStreamId";
 
 type Props = {};
 
@@ -12,8 +13,9 @@ function App({}: Props) {
   const [error, setError] = useState<Error | null>(null);
 
   const onSubmit = (contentId: string) => {
-    setLoading(!loading);
-    fetchStream(contentId);
+    setLoading(true);
+    const id = extractAceStreamId(contentId);
+    id ? fetchStream(id) : setError(new Error("Link de AceStream inválido."));
   };
 
   const fetchStream = async (contentId: string | undefined) => {
