@@ -1,23 +1,39 @@
+import { useForm } from "react-hook-form";
 import { LoaderCircle } from "lucide-react";
-import { type FormEvent, type Ref } from "react";
+import { useEffect } from "react";
 
 type Props = {
-  handleSubmit: (e: FormEvent) => void;
-  inputRef: Ref<HTMLInputElement>;
   loading: boolean;
+  onSubmit: (contentId: string) => void;
+  error: Error | null;
 };
 
-function SearchBox({ handleSubmit, inputRef, loading }: Props) {
+type FormValues = {
+  contentIdInput: string;
+};
+
+function SearchBox({ onSubmit, loading, error }: Props) {
+  const { register, handleSubmit, reset } = useForm<FormValues>();
+
+  useEffect(() => {
+    if (error) {
+      reset({ contentIdInput: "" });
+    }
+  }, [error]);
+
   return (
-    <form onSubmit={handleSubmit} className="flex gap-1.5 w-min">
+    <form
+      onSubmit={handleSubmit((data) => onSubmit(data.contentIdInput))}
+      className="flex items-center gap-2.5 w-min"
+    >
       <input
-        ref={inputRef}
+        {...register("contentIdInput", { required: true })}
         type="text"
         placeholder="content_id"
-        className="placeholder:text-neutral-2 p-1.5 pl-2.5 border border-neutral-2 rounded-[10px] w-[250px] text-white focus:border-neutral-3 duration-300"
+        className="placeholder:text-neutral-2 y-1.5 px-2.5 h-[33px] bg-neutral-1 rounded-[10px] w-[250px] text-white duration-300 ease-in-out border-2 border-black focus:ring-2 box-content ring-neutral-2"
       />
       <button
-        className={`rounded-[10px] cursor-pointer w-36 flex justify-center items-center gap-1.5 duration-300 ${
+        className={`rounded-[10px] cursor-pointer px-3 py-1.5 w-36 flex justify-center items-center gap-1.5 duration-300 ${
           loading ? "bg-neutral-5" : "bg-white"
         }`}
       >

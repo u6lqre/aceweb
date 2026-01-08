@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type FormEvent } from "react";
+import { useEffect, useState } from "react";
 import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
 import { Info } from "lucide-react";
@@ -8,15 +8,13 @@ import Footer from "./components/Footer";
 type Props = {};
 
 function App({}: Props) {
-  const inputRef = useRef<HTMLInputElement>(null);
   const [videoSrc, setVideoSrc] = useState<string | null>(null);
   const [loading, setLoading] = useState<boolean>(false);
-  const [error, setError] = useState<Error | null>();
+  const [error, setError] = useState<Error | null>(null);
 
-  const handleSubmit = (e: FormEvent) => {
-    e.preventDefault();
+  const onSubmit = (contentId: string) => {
     setLoading(!loading);
-    fetchStream(inputRef.current?.value);
+    fetchStream(contentId);
   };
 
   const fetchStream = async (contentId: string | undefined) => {
@@ -36,19 +34,15 @@ function App({}: Props) {
   };
 
   useEffect(() => {
-    if (inputRef.current) {
-      inputRef.current.value = "";
-      inputRef.current.focus();
+    if (error) {
+      setLoading(false);
+      console.error(error.message);
     }
   }, [error]);
 
   return (
     <div className="flex flex-col items-center gap-10 w-full">
-      <SearchBox
-        handleSubmit={handleSubmit}
-        inputRef={inputRef}
-        loading={loading}
-      />
+      <SearchBox loading={loading} onSubmit={onSubmit} error={error} />
 
       <div className="w-full flex flex-col gap-2.5">
         <VideoPlayer
@@ -59,7 +53,7 @@ function App({}: Props) {
         {error && (
           <p className="text-red-500 flex items-center gap-1.5 justify-center">
             <Info size={16} />
-            {error.message}. Please try again with another content_id.
+            Error al cargar stream, pruebe con otro link.
           </p>
         )}
       </div>
