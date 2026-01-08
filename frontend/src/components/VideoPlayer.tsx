@@ -40,13 +40,13 @@ function VideoPlayer({ src, setLoading, setError }: Props) {
   }, [src]);
 
   return (
-    <div className="w-full rounded-lg">
+    <div>
       <video
         ref={videoRef}
         height={360}
         width={640}
         controls
-        className="w-full rounded-lg"
+        className="w-full rounded-[20px]"
       >
         <source type="application/x-mpegURL" />
       </video>

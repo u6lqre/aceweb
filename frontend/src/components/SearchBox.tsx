@@ -29,11 +29,11 @@ function SearchBox({ onSubmit, loading, error }: Props) {
       <input
         {...register("contentIdInput", { required: true })}
         type="text"
-        placeholder="content_id"
-        className="placeholder:text-neutral-2 y-1.5 px-2.5 h-[33px] bg-neutral-1 rounded-[10px] w-[250px] text-white duration-300 ease-in-out border-2 border-black focus:ring-2 box-content ring-neutral-2"
+        placeholder="Pega tu link de AceStream aquí"
+        className="placeholder:text-neutral-2 px-3 py-2 bg-neutral-1 rounded-[10px] w-[350px] text-white duration-300 ease-in-out border-2 border-black focus:ring-2 box-content ring-neutral-2"
       />
       <button
-        className={`rounded-[10px] cursor-pointer px-3 py-1.5 w-36 flex justify-center items-center gap-1.5 duration-300 ${
+        className={`rounded-[10px] cursor-pointer px-3 py-1.5 flex justify-center items-center gap-1.5 duration-300 ${
           loading ? "bg-neutral-5" : "bg-white"
         }`}
       >

@@ -3,7 +3,6 @@ import VideoPlayer from "./components/VideoPlayer";
 import SearchBox from "./components/SearchBox";
 import { Info } from "lucide-react";
 import { rewriteEngineUrl } from "./utils/rewriteEngineUrl";
-import Footer from "./components/Footer";
 
 type Props = {};
 
@@ -42,7 +41,14 @@ function App({}: Props) {
 
   return (
     <div className="flex flex-col items-center gap-10 w-full">
-      <SearchBox loading={loading} onSubmit={onSubmit} error={error} />
+      <div className="flex flex-col gap-5">
+        <h1 className="text-white text-center font-bold text-4xl">
+          Acestream,
+          <br />
+          desde tu navegador 🌍
+        </h1>
+        <SearchBox loading={loading} onSubmit={onSubmit} error={error} />
+      </div>
 
       <div className="w-full flex flex-col gap-2.5">
         <VideoPlayer
@@ -57,7 +63,6 @@ function App({}: Props) {
           </p>
         )}
       </div>
-      <Footer />
     </div>
   );
 }
